@@ -10,10 +10,19 @@ void setup() {
   pinMode(motor1pin2, OUTPUT);
   pinMode(motor2pin1, OUTPUT);
   pinMode(motor2pin2, OUTPUT);
+
+  pinMode(9, OUTPUT); 
+  pinMode(10, OUTPUT);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:   
+
+  //Controlling speed (0 = off and 255 = max speed):
+  analogWrite(9, 100); //ENA pin
+  analogWrite(10, 200); //ENB pin
+
+  //Controlling spin direction of motors:
   digitalWrite(motor1pin1, HIGH);
   digitalWrite(motor1pin2, LOW);
 

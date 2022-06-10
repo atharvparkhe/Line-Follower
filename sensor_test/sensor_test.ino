@@ -10,13 +10,12 @@ void setup() {
 
 void loop() {
 //  digitalWrite(10, 65);
-  int s0 = digitalRead(A0);
-  int s1 = digitalRead(A1);
-  int s2 = digitalRead(A2);
-  int s3 = digitalRead(A3);
-  int s4 = digitalRead(A4);
+  int s1 = digitalRead(A0);
+  int s2 = digitalRead(A1);
+  int s3 = digitalRead(A2);
+  int s4 = digitalRead(A3);
+  int s5 = digitalRead(A4);
   String x = "\t";
-  Serial.println(s0 + x + s1 + x + s2 + x + s3 + x + s4);
-//Serial.println(s0);
+  Serial.println(s1 + x + s2 + x + s3 + x + s4 + x + s5);
   delay(100);
 }
