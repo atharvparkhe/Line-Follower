@@ -40,6 +40,15 @@ void setup() {
   pinMode(light, OUTPUT);
 }
 
+void forward(int s){
+  analogWrite(e1, s);
+  analogWrite(e2, s);
+  digitalWrite(m1, HIGH);
+  digitalWrite(m2, LOW);
+  digitalWrite(m3, HIGH);
+  digitalWrite(m4, LOW);
+}
+
 void left(){
   analogWrite(e1, 255);
   analogWrite(e2, 255);
@@ -49,12 +58,12 @@ void left(){
   digitalWrite(m4, HIGH);
 }
 
-void forward(){
-  analogWrite(e1, 100);
-  analogWrite(e2, 100);
+void slow_left(){
+  analogWrite(e1, 255);
+  analogWrite(e2, 255);
   digitalWrite(m1, HIGH);
   digitalWrite(m2, LOW);
-  digitalWrite(m3, HIGH);
+  digitalWrite(m3, LOW);
   digitalWrite(m4, LOW);
 }
 
@@ -67,10 +76,21 @@ void right(){
   digitalWrite(m4, LOW);
 }
 
+void slow_right(){
+  analogWrite(e1, 255);
+  analogWrite(e2, 255);
+  digitalWrite(m1, LOW);
+  digitalWrite(m2, LOW);
+  digitalWrite(m3, HIGH);
+  digitalWrite(m4, LOW);
+}
+
 void loop() {
 
   // Sensor Lights
-  digitalWrite(light, HIGH);
+//  digitalWrite(light, HIGH);
+
+  int last;
   
   //Reading Sensor Values
   int s1 = digitalRead(ir1);  //Left Most Sensor
@@ -103,39 +123,56 @@ void loop() {
  * 
  */
 
- String x = "\t";
-  Serial.println(s1 + x + s2 + x + s3 + x + s4 + x + s5);
-  delay(100);
+// testing
+// left();
+// right();
+// slow_left();
+// slow_right();
+//  String x = "\t";
+//  Serial.println(s1 + x + s2 + x + s3 + x + s4 + x + s5);
+//  delay(100);
 
  
-//  //if only middle sensor(s) detects
-//  if(((s1==1)&&(s2==1)&&(s3==0)&&(s4==1)&&(s5==1)) || ((s1==1)&&(s2==0)&&(s3==0)&&(s4==0)&&(s5==1)))
-//  {
-//    forward();
-//  }
-//
-//  //if left most sensor detects
-//  else if(((s1==0)&&(s2==1)&&(s3==1)&&(s4==1)&&(s5==1)) || ((s1==1)&&(s2==0)&&(s3==1)&&(s4==1)&&(s5==1)) || ((s1==0)&&(s2==0)&&(s3==1)&&(s4==1)&&(s5==1)) || ((s1==1)&&(s2==0)&&(s3==0)&&(s4==1)&&(s5==1)) || ((s1==0)&&(s2==0)&&(s3==0)&&(s4==1)&&(s5==1)))
-//  {
-//    left();
-//  }
-//
-//  //if right most sensor detect
-//  else if(((s1==1)&&(s2==1)&&(s3==1)&&(s4==1)&&(s5==0)) || ((s1==1)&&(s2==1)&&(s3==1)&&(s4==0)&&(s5==1)) || ((s1==1)&&(s2==1)&&(s3==1)&&(s4==0)&&(s5==0)) || ((s1==1)&&(s2==1)&&(s3==0)&&(s4==0)&&(s5==1)) || ((s1==1)&&(s2==1)&&(s3==0)&&(s4==0)&&(s5==0)))
-//  {
-//    right();
-//  }
-//  
-//  //if all sensor detects
-//  else if((s1==0)&&(s2==0)&&(s3==0)&&(s4==0)&&(s5==0))
-//  {
-//    right();
-//  }
-//
-//  //if no sensor detect
-//  else if((s1==1)&&(s2==1)&&(s3==1)&&(s4==1)&&(s5==1))
-//  {
-//    left();
-//  }
+  //if only middle sensor(s) detects
+  if( ((s1==1)&&(s2==1)&&(s3==0)&&(s4==1)&&(s5==1)) || ((s1==1)&&(s2==0)&&(s3==0)&&(s4==0)&&(s5==1)) )
+  {
+    forward(180);
+  }
+
+  //if left center sensor detects
+  if( ((s1==1)&&(s2==0)&&(s3==0)&&(s4==1)&&(s5==1)) || ((s1==0)&&(s2==0)&&(s3==0)&&(s4==1)&&(s5==1)) )
+  {
+    left();
+  }
+
+  //if left most sensor detects
+  if( ((s1==0)&&(s2==1)&&(s3==1)&&(s4==1)&&(s5==1)) || ((s1==1)&&(s2==0)&&(s3==1)&&(s4==1)&&(s5==1)) || ((s1==0)&&(s2==0)&&(s3==1)&&(s4==1)&&(s5==1)) )
+  {
+    slow_left();
+  }
+
+  //if right most sensor detect
+  if(((s1==1)&&(s2==1)&&(s3==1)&&(s4==1)&&(s5==0)) || ((s1==1)&&(s2==1)&&(s3==1)&&(s4==0)&&(s5==1)) || ((s1==1)&&(s2==1)&&(s3==1)&&(s4==0)&&(s5==0)) )
+  {
+    slow_right();
+  }
+
+  //if right most sensor detect
+  if(((s1==1)&&(s2==1)&&(s3==0)&&(s4==0)&&(s5==1)) || ((s1==1)&&(s2==1)&&(s3==0)&&(s4==0)&&(s5==0)))
+  {
+    right();
+  }
+  
+  //if all sensor detects
+  if((s1==0)&&(s2==0)&&(s3==0)&&(s4==0)&&(s5==0))
+  {
+    forward(150);
+  }
+
+  //if no sensor detect
+  if((s1==1)&&(s2==1)&&(s3==1)&&(s4==1)&&(s5==1))
+  {
+    slow_left();
+  }
   
 }
